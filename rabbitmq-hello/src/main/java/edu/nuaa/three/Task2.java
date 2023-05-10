@@ -1,6 +1,7 @@
 package edu.nuaa.three;
 
 import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.MessageProperties;
 import edu.nuaa.util.RabbitMqUtils;
 
 import java.util.Scanner;
@@ -17,11 +18,13 @@ public class Task2 {
 
     public static void main(String[] args) throws Exception {
         Channel channel = RabbitMqUtils.getChannel();
-        channel.queueDeclare(QUEUE_NAME,false,false,false,null);
+        //durable 队列持久化
+        channel.queueDeclare(QUEUE_NAME,true,false,false,null);
         Scanner sc = new Scanner(System.in);
         while (sc.hasNext()){
             String message = sc.next();
-            channel.basicPublish("",QUEUE_NAME,null,message.getBytes("utf-8"));
+            //消息持久化
+            channel.basicPublish("",QUEUE_NAME, MessageProperties.PERSISTENT_TEXT_PLAIN,message.getBytes("utf-8"));
             System.out.println("生产者发送消息："  + message);
         }
     }

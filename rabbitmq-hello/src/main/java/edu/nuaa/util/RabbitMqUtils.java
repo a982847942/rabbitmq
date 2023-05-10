@@ -14,7 +14,7 @@ public class RabbitMqUtils {
 
     static {
         factory = new ConnectionFactory();
-        factory.setHost("192.168.204.128");//Host
+        factory.setHost("192.168.204.129");//Host
         factory.setUsername("zk");//username
         factory.setPassword("zk10230705");//password
     }
